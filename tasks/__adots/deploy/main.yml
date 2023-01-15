@@ -9,7 +9,7 @@
     dest: ~/.adots/
     #
     archive: false
-    checksum: yes
+    checksum: true
     compress: true
     # Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
     copy_links: true

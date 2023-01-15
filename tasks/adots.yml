@@ -33,7 +33,6 @@
     file: __adots/install/main.yml
   when: adots_install_os_packages
 
-
 - name: "{{ adots_current_package }} : Including adots backup tasks"
   ansible.builtin.include_tasks:
     file: __adots/backup/main.yml
