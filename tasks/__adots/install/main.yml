@@ -6,7 +6,7 @@
     name: "{{ adots.packages[ansible_os_family|lower] }}"
     state: latest
   become: true
-  when: (adots.packages[ansible_os_family | lower]) and (adots.packages[ansible_os_family|lower] | length > 0)
+  when: (adots.packages.generic is defined and adots.packages.generic | length > 0) and (adots.packages[ansible_os_family|lower] | length == 0)
 
 - name: "Install {{ adots_current_package }} packages for {{ ansible_os_family }}"
   ansible.builtin.include_tasks: __adots/install/{{ ansible_os_family }}.yml

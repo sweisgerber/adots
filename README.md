@@ -27,6 +27,28 @@ Including an example of how to use your role (for instance, with variables passe
       roles:
          - { role: username.rolename, x: 42 }
 
+
+Example adots dotfile package definition
+----------------------------------------
+
+Place the package definition in the roles `defaults/main.yml` file.
+
+```yaml
+adots:
+  name: <NAME> # rolename usually
+  type: default
+  packages:
+    general: []
+    debian:
+      - <PACKAGE_NAME_DEBIAN>
+    archlinux:
+      - <PACKAGE_NAME_ARCH>
+    aur: [] # <PACKAGE_NAME_AUR>
+  backup_paths:
+    - <PATH/ON/TARGET/HOST>
+    - <ANOTHER/PATH/ON/TARGET/HOST>
+```
+
 License
 -------
 

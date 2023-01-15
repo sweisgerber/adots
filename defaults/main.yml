@@ -14,6 +14,10 @@ adots_packages:
 
 adots_custom_dependencies: []
 
+adots_deploy_keep_permissions: false
+
+# adots_backup_path: defaults to `playbook_dir`
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 dotfiles_local_backup_path: "../../../files/backup/files/backup/"
@@ -81,16 +85,7 @@ dotfile_packages:
     type: none
   # PACKAGE ################################
   # https://github.com/sharkdp/bat
-  - name: bat
-    type: default
-    packages:
-      debian: bat
-      archlinux:
-        - bat
-    backup_paths:
-      - .config/bat/config
-      - .config/fish/functions/bathelp.fish
-      - .config/fish/conf.d/15.bat.fish
+
   # PACKAGE ################################
   - name: beets
     type: none
@@ -132,29 +127,13 @@ dotfile_packages:
   - name: crontab
     type: none
   # PACKAGE ################################
-  - name: docker
-    type: server
-    backup_paths:
-      - .bashrc.d/12.alias.docker.bashrc
-      - .bashrc.d/32.functions.docker.bashrc
-      - .config/fish/functions/dpsa.fish
-      - .config/fish/functions/dps.fish
-      - .config/fish/functions/docker-upgrade.fish
   # PACKAGE ################################
   - name: dotfiles
     type: none
     backup_paths:
       - .bashrc.d/80.dotfiles.bashrc
   # PACKAGE ################################
-  - name: espanso
-    type: none
-    packages:
-      debian: []
-      archlinux: []
-      aur:
-        - espanso
-    backup_paths:
-      - .config/espanso
+
   # PACKAGE ################################
   - name: fish
     type: default
@@ -175,15 +154,7 @@ dotfile_packages:
 #      - .local/share/fonts/
 #      - .fonts/
   # PACKAGE ################################
-  - name: fuck
-    type: default
-    packages:
-      debian:
-        - thefuck
-      archlinux:
-        - thefuck
-    backup_paths:
-      - .bashrc.d/92.completion.thefuck.bashrc
+
   # PACKAGE ################################
   - name: fzf
     type: default
@@ -235,11 +206,7 @@ dotfile_packages:
       - .bashrc.d/80.jekyll.bashrc
       - .zsh/80.jekyll.zsh
   # PACKAGE ################################
-  - name: kitty
-    type: gui
-    backup_paths:
-      - .config/kitty/
-      - .config/fish/conf.d/30.kitty.fish
+
   # PACKAGE ################################
   - name: lldb
     type: work

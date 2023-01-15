@@ -1,6 +1,31 @@
 ---
 # tasks file for adots
 
-- name: "Backup {{ adots_current_package }} dotfiles"
+- name: "{{ adots_current_package }} : Collecting backups paths"
+  local_action:  "ansible.builtin.command find {{ adots_role_root_folder }}/files/ -type f -printf '%P\n'"
+  register: _adots_local_found_backup_paths
+
+- name: "{{ adots_current_package }} : Cleaning backups paths"
+  ansible.builtin.set_fact:
+    adots_found_backup_paths: "{{ _adots_local_found_backup_paths['stdout_lines'] | reject('==', '') | list }}"
+    cacheable: no
+
+- name: "Backup {{ adots_current_package }} dotfiles to target: {{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}"
   ansible.builtin.debug:
-    msg: "Not implemented yet!"
+    msg: "{{ adots_found_backup_paths }}"
+
+- name: "Backup {{ adots_current_package }} dotfiles"
+  ansible.posix.synchronize:
+    src: "{{ item }}"
+    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
+    archive: yes
+    delete: no
+    mode: pull
+    recursive: yes
+    owner: no
+    group: no
+    perms: no
+    rsync_opts:
+      - "--mkpath"
+  ignore_errors: yes
+  loop: "{{ adots_found_backup_paths }}"

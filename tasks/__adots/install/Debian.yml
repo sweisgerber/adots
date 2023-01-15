@@ -1,3 +1,9 @@
 ---
 # tasks file for adots
 
+- name: "Install {{ adots_current_package }} packages"
+  ansible.builtin.package:
+    name: "{{ adots.packages[ansible_os_family | lower] }}"
+    state: latest
+  become: true
+  when: (adots.packages[ansible_os_family|lower] is defined) and (adots.packages[ansible_os_family | lower] | length == 0)

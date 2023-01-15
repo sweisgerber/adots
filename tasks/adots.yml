@@ -1,30 +1,40 @@
 ---
 # tasks file for adots
 
+- name: "{{ adots_current_package }} : Setting role root folder"
+  ansible.builtin.set_fact:
+    adots_role_root_folder: "{{ ansible_parent_role_paths | first }}"
+    cacheable: no
 
-- name: "{{ ansible_role_name }}: Setting human readable package name"
+- name: "{{ adots_current_package }} : Setting role root folder"
+  ansible.builtin.set_fact:
+    adots_backup_path: "{{ playbook_dir}}/backups_default"
+    cacheable: no
+  when: adots_backup_path is not defined
+
+- name: "Setting human readable package name"
   ansible.builtin.set_fact:
     adots_current_package: "{{ ansible_parent_role_names | first }}"
     cacheable: no
 
 # usually you only want to execute these tassk once
-- name: "{{ ansible_role_name }}: Making sure adots dependencies are installed on target"
+- name: "Making sure adots dependencies are installed on target"
   ansible.builtin.include_tasks:
     file: __adots/install/main.yml
   when: adots_install_own_dependencies
 
-- name: "{{ ansible_role_name }}: {{ adots_current_package }}: ncluding adots OS packages install tasks"
+- name: "{{ adots_current_package }} : Including adots OS packages install tasks"
   ansible.builtin.include_tasks:
     file: __adots/install/main.yml
   when: adots_install_os_packages
 
 
-- name: "{{ ansible_role_name }}: {{ adots_current_package }}: Including adots backup tasks"
+- name: "{{ adots_current_package }} : Including adots backup tasks"
   ansible.builtin.include_tasks:
     file: __adots/backup/main.yml
   when: adots_backup_dotfiles
 
-- name: "{{ ansible_role_name }}: {{ adots_current_package }}: Including adots deploy tasks"
+- name: "{{ adots_current_package }} : Including adots deploy tasks"
   ansible.builtin.include_tasks:
     file: __adots/deploy/main.yml
   when: adots_deploy_dotfiles

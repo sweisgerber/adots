@@ -1,7 +1,16 @@
 ---
 # tasks file for adots
 
+- name: "Install {{ adots_current_package }} packages"
+  ansible.builtin.package:
+    name: "{{ adots.packages[ansible_os_family | lower] }}"
+    state: latest
+  become: true
+  when: (adots.packages[ansible_os_family|lower] is defined) and (adots.packages[ansible_os_family | lower] | length == 0)
+
+
 - name: "Install {{ adots_current_package }} packages AUR"
   ansible.builtin.debug:
     msg: "Not implemented yet {{ adots.packages.aur }}"
-  when: adots.packages.aur and adots.packages.aur|length > 0
+  become: true
+  when: (adots.packages.aur is defined) and (adots.packages.aur | length > 0)
