@@ -16,7 +16,11 @@ adots_custom_dependencies: []
 
 adots_deploy_keep_permissions: false
 
+adots_backups_default_folder_name: adots_backups
 # adots_backup_path: defaults to `playbook_dir`
+
+adots_backup_method: synchronize
+#adots_backup_method: fetch
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

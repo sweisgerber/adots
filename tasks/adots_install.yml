@@ -7,7 +7,6 @@
     state: latest
   become: true
 
-
 - name: "Install adots custom dependencies"
   package:
     name: "{{ adots_custom_dependencies }}"

@@ -1,14 +1,17 @@
 ---
 # tasks file for adots
 
+# Setting & Probing
+
 - name: "{{ adots_current_package }} : Setting role root folder"
   ansible.builtin.set_fact:
     adots_role_root_folder: "{{ ansible_parent_role_paths | first }}"
     cacheable: no
 
+# store backups
 - name: "{{ adots_current_package }} : Setting role root folder"
   ansible.builtin.set_fact:
-    adots_backup_path: "{{ playbook_dir}}/backups_default"
+    adots_backup_path: "{{ playbook_dir}}/{{ adots_backups_default_folder_name }}"
     cacheable: no
   when: adots_backup_path is not defined
 
@@ -16,6 +19,8 @@
   ansible.builtin.set_fact:
     adots_current_package: "{{ ansible_parent_role_names | first }}"
     cacheable: no
+
+
 
 # usually you only want to execute these tassk once
 - name: "Making sure adots dependencies are installed on target"
