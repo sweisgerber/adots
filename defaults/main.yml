@@ -17,16 +17,16 @@ adots_custom_dependencies: []
 adots_deploy_keep_permissions: false
 
 adots_backups_default_folder_name: adots_backups
-# adots_backup_path: defaults to `playbook_dir`
 
-adots_backup_method: synchronize
-#adots_backup_method: fetch
+# adots_backup_path: defaults to `{{ playbook_dir}}/{{ adots_backups_default_folder_name }}`
+
+adots_backup_method: synchronize # one can also `fetch`
+
+# Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
+adots_deploy_copy_links: true
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-dotfiles_local_backup_path: "../../../files/backup/files/backup/"
-
-dotfiles_backup: true
 
 dotfile_tags:
   - default

@@ -1,12 +1,11 @@
 ---
 # tasks file for adots
 
-- name: "{{ adots_current_package }} : Fetch Make sure destination dir exists "
+- name: "{{ adots_current_package }} : Fetch Make sure destination dir exists"
   file:
     path: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item | dirname }}"
     state: directory
   loop: "{{ adots_found_backup_paths }}"
-  when: adots_backup_method == 'fetch'
 
 - name: "{{ adots_current_package }} : Fetch Backup dotfiles "
   ansible.builtin.fetch:
@@ -14,4 +13,18 @@
     dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
     fail_on_missing: false
   loop: "{{ adots_found_backup_paths }}"
-  when: adots_backup_method == 'fetch'
+
+- name: "{{ adots_current_package }} : Fetch Make sure destination dir exists Extra Backup"
+  file:
+    path: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item | dirname }}"
+    state: directory
+  loop: "{{ adots.backup_paths }}"
+  when: adots.backup_paths is defined and backup_paths | length > 0
+
+- name: "{{ adots_current_package }} : Fetch Backup dotfiles Extra Backup"
+  ansible.builtin.fetch:
+    src: "{{ item }}"
+    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
+    fail_on_missing: false
+  loop: "{{ adots.backup_paths }}"
+  when: adots.backup_paths is defined and backup_paths | length > 0

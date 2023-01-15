@@ -12,7 +12,7 @@
     checksum: true
     compress: true
     # Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
-    copy_links: true
+    copy_links: "{{ adots_deploy_copy_links | bool  }}"
     # Copy symlinks as symlinks.
     # links: false
     delete: false

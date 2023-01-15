@@ -18,7 +18,6 @@
       - "--mkpath"
   ignore_errors: yes
   loop: "{{ adots_found_backup_paths }}"
-  when: adots_backup_method == 'synchronize'
 
 - name: "{{ adots_current_package }} : Rsync Backup dotfiles"
   ansible.posix.synchronize:
@@ -36,5 +35,5 @@
     rsync_opts:
       - "--mkpath"
   ignore_errors: yes
-  loop: "{{ adots_found_backup_paths }}"
-  when: (adots.backup_paths is defined and backup_paths | length > 0
+  loop: "{{ adots.backup_paths }}"
+  when: adots.backup_paths is defined and backup_paths | length > 0
