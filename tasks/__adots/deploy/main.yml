@@ -1,6 +1,6 @@
 ---
 # tasks file for adots
 
-- name: "Deploy {{ ansible_role_name }} dotfiles"
+- name: "Deploy {{ adots_current_package }} dotfiles"
   ansible.builtin.debug:
     msg: "Not implemented yet!"

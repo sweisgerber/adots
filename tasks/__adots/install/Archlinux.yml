@@ -1,7 +1,7 @@
 ---
 # tasks file for adots
 
-- name: "Install {{ ansible_parent_role_names }} packages AUR"
+- name: "Install {{ adots_current_package }} packages AUR"
   ansible.builtin.debug:
     msg: "Not implemented yet {{ adots.packages.aur }}"
   when: adots.packages.aur and adots.packages.aur|length > 0

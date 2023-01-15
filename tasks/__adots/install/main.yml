@@ -1,12 +1,12 @@
 ---
 # tasks file for adots
 
-- name: "Install {{ ansible_parent_role_names }} packages"
+- name: "Install {{ adots_current_package }} packages"
   ansible.builtin.package:
     name: "{{ adots.packages[ansible_os_family|lower] }}"
     state: latest
   become: true
   when: (adots.packages[ansible_os_family | lower]) and (adots.packages[ansible_os_family|lower] | length > 0)
 
-- name: "Install {{ ansible_parent_role_names }} packages for {{ ansible_os_family }}"
+- name: "Install {{ adots_current_package }} packages for {{ ansible_os_family }}"
   ansible.builtin.include_tasks: __adots/install/{{ ansible_os_family }}.yml
