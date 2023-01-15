@@ -1,0 +1,445 @@
+---
+# defaults file for adots
+
+adots_install_own_dependencies: false
+
+adots_install_os_packages: true
+adots_backup_dotfiles: true
+adots_deploy_dotfiles: true
+
+adots_packages:
+  - ansible
+  - curl
+  - rsync
+
+adots_custom_dependencies: []
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+dotfiles_local_backup_path: "../../../files/backup/files/backup/"
+
+dotfiles_backup: true
+
+dotfile_tags:
+  - default
+  - gui
+  - work
+  - private
+  - server
+  - none
+
+dotfile_packages:
+  # PACKAGE ################################
+  - name: rsync
+    type: default
+    packages:
+      debian:
+        - rsync
+      archlinux:
+        - rsync
+      aur: []
+    backup_paths: []
+  # PACKAGE ################################
+  - name: adr
+    type: work
+    backup_paths:
+      - .bashrc.d/22.paths.adr.bashrc
+  # PACKAGE ################################
+  - name: android
+    type: work
+    backup_paths:
+      - .bashrc.d/50.adb-functions.shell
+      - .bashrc.d/50.android.shell
+  # PACKAGE ################################
+  - name: ansible
+    type: default
+    backup_paths:
+      - .ansible/
+      - .ansible.cfg
+  # PACKAGE ################################
+  - name: antigen
+    type: none
+    backup_paths:
+      - .antigenrc
+      - .zsh/50.antigen.zsh
+  # PACKAGE ################################
+  - name: apps
+    type: gui
+    backup_paths:
+      - apps/
+      # PACKAGE ################################
+  - name: bash
+    type: default
+    backup_paths:
+      - .bashrc.d/
+      - .bashrc
+      - .bash_profile
+      - .bash_logout
+      - .bash_login
+  # PACKAGE ################################
+  - name: bash-it
+    type: none
+  # PACKAGE ################################
+  # https://github.com/sharkdp/bat
+  - name: bat
+    type: default
+    packages:
+      debian: bat
+      archlinux:
+        - bat
+    backup_paths:
+      - .config/bat/config
+      - .config/fish/functions/bathelp.fish
+      - .config/fish/conf.d/15.bat.fish
+  # PACKAGE ################################
+  - name: beets
+    type: none
+    backup_paths:
+      - .config/beets/
+      - .config/fish/functions/beet.fish
+      - .config/fish/functions/beet-tag-acoustic.fish
+      - .config/fish/functions/beet-tag-alternative.fish
+      - .config/fish/functions/beet-tag-ambient.fish
+      - .config/fish/functions/beet-tag-black-metal.fish
+      - .config/fish/functions/beet-tag-chiptune.fish
+      - .config/fish/functions/beet-tag-classical.fish
+      - .config/fish/functions/beet-tag-crust.fish
+      - .config/fish/functions/beet-tag-dark.fish
+      - .config/fish/functions/beet-tag-downtempo.fish
+      - .config/fish/functions/beet-tag-electronic.fish
+      - .config/fish/functions/beet-tag-gerlectro.fish
+      - .config/fish/functions/beet-tag-hip-hop.fish
+      - .config/fish/functions/beet-tag-indie.fish
+      - .config/fish/functions/beet-tag-math.fish
+      - .config/fish/functions/beet-tag-metal.fish
+      - .config/fish/functions/beet-tag-oldie.fish
+      - .config/fish/functions/beet-tag-ost.fish
+      - .config/fish/functions/beet-tag-other.fish
+      - .config/fish/functions/beet-tag-pop.fish
+      - .config/fish/functions/beet-tag-post.fish
+      - .config/fish/functions/beet-tag-punk.fish
+      - .config/fish/functions/beet-tag-punkrock.fish
+      - .config/fish/functions/beet-tag-stoner.fish
+      - .config/fish/functions/beet-tag-synthwave.fish
+      - .config/fish/completions/beet.fish
+  # PACKAGE ################################
+  - name: bin
+    type: default
+    backup_paths:
+      - .local/share/man/
+      - bin/
+  # PACKAGE ################################
+  - name: crontab
+    type: none
+  # PACKAGE ################################
+  - name: docker
+    type: server
+    backup_paths:
+      - .bashrc.d/12.alias.docker.bashrc
+      - .bashrc.d/32.functions.docker.bashrc
+      - .config/fish/functions/dpsa.fish
+      - .config/fish/functions/dps.fish
+      - .config/fish/functions/docker-upgrade.fish
+  # PACKAGE ################################
+  - name: dotfiles
+    type: none
+    backup_paths:
+      - .bashrc.d/80.dotfiles.bashrc
+  # PACKAGE ################################
+  - name: espanso
+    type: none
+    packages:
+      debian: []
+      archlinux: []
+      aur:
+        - espanso
+    backup_paths:
+      - .config/espanso
+  # PACKAGE ################################
+  - name: fish
+    type: default
+    packages:
+      debian:
+        - fish
+      archlinux:
+        - fish
+      aur: []
+    backup_paths:
+      - .config/fish/
+      - .bashrc.d/97.fish-override.bashrc
+  # PACKAGE ################################
+  - name: fonts
+    type: gui
+    backup_paths:
+      - .config/fontconfig/
+#      - .local/share/fonts/
+#      - .fonts/
+  # PACKAGE ################################
+  - name: fuck
+    type: default
+    packages:
+      debian:
+        - thefuck
+      archlinux:
+        - thefuck
+    backup_paths:
+      - .bashrc.d/92.completion.thefuck.bashrc
+  # PACKAGE ################################
+  - name: fzf
+    type: default
+    packages:
+      debian:
+        - fzf
+      archlinux:
+        - fzf
+  # PACKAGE ################################
+  - name: gdb
+    type: work
+    backup_paths:
+      - .gdbinit
+  # PACKAGE ################################
+  - name: git
+    type: default
+    backup_paths:
+      - .bashrc.d/11.alias.git.bashrc
+      - .bashrc.d/31.functions.git.bashrc
+      - .gitconfig
+      - .gitignore_global
+  # PACKAGE ################################
+  - name: git_home
+    type: private
+    backup_paths:
+      - .gitcommit.template
+      - .gitconfig.host
+  # PACKAGE ################################
+  - name: git_work
+    type: work
+    backup_paths:
+      - .gitcommit.template
+      - .gitconfig.host
+  # PACKAGE ################################
+  - name: go
+    type: none
+    backup_paths:
+      - .zsh/env/50.go.zshenv
+      - .bashrc.d/50.go.bashrc
+  # PACKAGE ################################
+  - name: gpg
+    type: none
+    backup_paths:
+      - .gnupg/gpg-agent.conf
+  # PACKAGE ################################
+  - name: jekyll
+    type: none
+    backup_paths:
+      - .bashrc.d/80.jekyll.bashrc
+      - .zsh/80.jekyll.zsh
+  # PACKAGE ################################
+  - name: kitty
+    type: gui
+    backup_paths:
+      - .config/kitty/
+      - .config/fish/conf.d/30.kitty.fish
+  # PACKAGE ################################
+  - name: lldb
+    type: work
+    backup_paths:
+      - lldbinit.py
+  # PACKAGE ################################
+  - name: nano
+    type: default
+    backup_paths:
+      - .nanorc
+  # PACKAGE ################################
+  - name: nb
+    type: default
+    backup_paths:
+      - bin/nb
+      - bin/update-nb.sh
+  # PACKAGE ################################
+  - name: neovim
+    type: none
+    backup_paths:
+      - .config/nvim/init.vim
+  # PACKAGE ################################
+  - name: nodejs
+    type: work
+    backup_paths:
+      - .zsh/env/50.nodejs.zshenv
+      - .bashrc.d/50.nodejs.bashrc
+  # PACKAGE ################################
+  - name: ohmyzsh
+    type: private
+    backup_paths:
+      - .zsh/49.ohmy.zsh
+  # PACKAGE ################################
+  - name: pim
+    type: private
+    backup_paths:
+      - bookmarks/
+      - contacts/
+  # PACKAGE ################################
+  - name: powerlevel10k
+    type: private
+    backup_paths:
+      - .p10k.zsh
+  # PACKAGE ################################
+  - name: powerline
+    type: default
+    packages:
+      debian:
+        - powerline
+        - python3-powerline
+        - fonts-powerline
+      archlinux:
+        - powerline
+        - powerline-fonts
+    backup_paths:
+      - .config/powerline/
+      - .bashrc.d/80.code.powerline.bashrc
+      - .bashrc.d/94.prompt.powerline.bashrc
+      - .vimrc.d/90.powerline.vim.disabled
+      - .zsh/80.code.powerline.zsh
+      - .zsh/96.prompt.powerline.zsh
+  # PACKAGE ################################
+  - name: python
+    type: default
+    backup_paths:
+      - .bashrc.d/80.python.bashrc
+      - .config/fish/completions/pip.fish
+      - .zsh/80.python.zsh
+  # PACKAGE ################################
+  - name: ripgrep
+    type: default
+    packages:
+      debian:
+        - ripgrep
+      archlinux:
+        - ripgrep
+    backup_paths:
+      - .ripgreprc
+  # PACKAGE ################################
+  - name: ruby
+    type: work
+    backup_paths:
+      - .bashrc.d/50.ruby.bashrc
+      - .zsh/50.ruby.zsh
+  # PACKAGE ################################
+  - name: sh
+    type: default
+    backup_paths:
+      - .profile.d/
+      - .profile
+      - .dir_colors.dark
+      - .dir_colors
+  # PACKAGE ################################
+  - name: ssh
+    type: default
+    backup_paths:
+      - .ssh/
+      - .bashrc.d/80.ssh-agent.bashrc
+      - .config/fish/functions/__ssh_agent_start.fish
+      - .config/fish/functions/__ssh_agent_is_started.fish
+      - .config/fish/conf.d/fish-ssh-agent.fish
+      - .zsh/80.ssh-agent.zsh
+  # PACKAGE ################################
+  - name: ssh_work
+    type: work
+    backup_paths:
+      - .ssh/
+  # PACKAGE ################################
+  - name: starship
+    type: none
+    packages:
+      archlinux:
+        - starship
+    backup_paths:
+      - .config/fish/conf.d/98.starship.fish
+      - .config/starship.toml
+      - .bashrc.d/98.starship.bashrc
+      - .zsh/96.prompt.starship.zsh
+  # PACKAGE ################################
+  - name: starship-binary-aarch64
+    type: none
+    backup_paths:
+      - bin/starship
+  # PACKAGE ################################
+  - name: starship-binary-x86_64
+    type: none
+    backup_paths:
+      - bin/starship
+  # PACKAGE ################################
+  - name: templates
+    type: default
+    backup_paths:
+      - .templates/
+  # PACKAGE ################################
+  - name: tmux
+    type: default
+    packages:
+      debian:
+        - tmux
+      archlinux:
+        - tmux
+    backup_paths:
+      - .tmux.conf
+  # PACKAGE ################################
+  - name: vagrant
+    type: work
+    backup_paths:
+      - vagrant/debian/stretch/Vagrantfile
+  # PACKAGE ################################
+  - name: vim
+    type: default
+    packages:
+      debian:
+        - vim
+        - vim-nox
+        - vim-airline
+      archlinux:
+        - vim
+        - vim-airline
+    backup_paths:
+      - .vim/
+      - .vimrc.d/
+      - .vimrc
+      - .bashrc.d/30.functions.vim.bashrc
+      - .bashrc.d/20.env.vim.bashrc
+      - .zsh/20.env.vim.zsh
+  # PACKAGE ################################
+  - name: x
+    type: gui
+    backup_paths:
+      - .bashrc.d/90.x.bashrc
+      - .face
+      - .face.icon
+      - .Xmodmap
+      - .Xresources
+  # PACKAGE ################################
+  - name: yakuake
+    type: gui
+    backup_paths:
+      - .local/share/konsole/
+      - .local/share/yakuake/
+  # PACKAGE ################################
+  - name: zsh
+    type: default
+    packages:
+      debian:
+        - zsh
+        - zsh-antigen
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
+      archlinux:
+        - zsh
+        - zsh-completions
+        - zsh-syntax-highlighting
+    backup_paths:
+      - .zkbd/
+      - .zsh/
+      - .zlogin
+      - .zlogout
+      - .zprofile
+      - .zshenv
+      - .zshrc
+  # PACKAGE ################################

@@ -1,0 +1,85 @@
+---
+# tasks file for adots
+
+- name: "Install adots dependencies"
+  ansible.builtin.include_tasks: adots_install.yml
+
+
+#- include_tasks: backup-dotfiles.yml
+#  when: "{{ dotfiles_backup | bool }}"
+#
+#- name: Install the latest version of dotfile OS packages
+#  ansible.builtin.package:
+#    name: "{{ item['packages'][ansible_distribution | lower] }}"
+#    state: latest
+#  remote_user: root
+#  loop: "{{ dotfile_packages }}"
+#  # the per-host tags should usually be defined in host_vars
+#  when: item.type in dotfiles_tags and item['packages'] is defined and ansible_user_id == 'root'
+#
+#- name: Install the latest version of dotfile OS packages (Extra)
+#  ansible.builtin.package:
+#    name: "{{ dotfile_packages | selectattr('name', '==', item) | map(attribute='packages') | map(attribute=os_key) | flatten }}"
+#    state: latest
+#  remote_user: root
+#  loop: "{{  dotfiles_extra_packages if dotfiles_extra_packages is iterable and dotfiles_extra_packages is not string else [] }}"
+#  when: ansible_user_id == 'root' and dotfile_packages | selectattr('name', '==', item) | selectattr(os_package_attr, "defined") | list | length > 0
+#  vars:
+#    os_key: "{{ ansible_distribution | lower }}"
+#    os_package_attr: "packages.{{os_key}}"
+#
+#- name: "{{ ansible_user_id }}:{{ item.name }} Deploy Dotfile Type Matches"
+#  ansible.posix.synchronize:
+#    src: "../../../files/dotfiles/{{ item.name }}/"
+#    dest: ~/
+#    archive: no
+#    checksum: yes
+#    delete: no
+#    mode: push
+#    recursive: yes
+#    owner: no
+#    group: no
+#    perms: no
+#    copy_links: true
+#    ssh_connection_multiplexing: yes
+#    rsync_opts:
+#      - "--mkpath"
+#  loop: "{{ dotfile_packages }}"
+#  # the per-host tags should usually be defined in host_vars
+#  when: item.type in dotfiles_tags
+#
+#- name: "{{ ansible_user_id }}:{{ item.name }} Deploy Dotfile Extra Packages"
+#  ansible.posix.synchronize:
+#    src: "../../../files/dotfiles/{{ item }}/"
+#    dest: ~/
+#    archive: no
+#    checksum: yes
+#    delete: no
+#    mode: push
+#    recursive: yes
+#    owner: no
+#    group: no
+#    perms: no
+#    copy_links: true
+#    ssh_connection_multiplexing: yes
+#    rsync_opts:
+#      - "--mkpath"
+#  # the per-host extra_packages should usually be defined in the main playbook `dotfiles.yml`
+#  loop: "{{  dotfiles_extra_packages if dotfiles_extra_packages is iterable and dotfiles_extra_packages is not string else [] }}"
+#
+#- name: Set up the configured shells for users
+#  user:
+#    name: "{{ item.name }}"
+#    shell: "{{ item.shell | default('/bin/bash') }}"
+#  loop: "{{ users_accounts }}"
+#  when: ansible_user_id == 'root'
+#
+#- name: "{{ ansible_user_id }} Disable Starship if requested"
+#  ansible.builtin.file:
+#    path:
+#      - .bashrc.d/98.starship.bashrc
+#      - .config/fish/conf.d/98.starship.fish
+#      - .zsh/96.prompt.starship.zsh
+#      - bin/starship
+#    state: absent
+#  when: disable_starship | default(false)

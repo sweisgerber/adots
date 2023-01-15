@@ -1,0 +1,25 @@
+---
+# tasks file for adots
+
+
+# usually you only want to execute these tassk once
+- name: "{{ ansible_role_name }}: Making sure adots dependencies are installed on target"
+  ansible.builtin.include_tasks:
+    file: __adots/install/main.yml
+  when: adots_install_own_dependencies
+
+- name: "{{ ansible_role_name }}: {{ ansible_parent_role_names }}: ncluding adots OS packages install tasks"
+  ansible.builtin.include_tasks:
+    file: __adots/install/main.yml
+  when: adots_install_os_packages
+
+
+- name: "{{ ansible_role_name }}: {{ ansible_parent_role_names }}: Including adots backup tasks"
+  ansible.builtin.include_tasks:
+    file: __adots/backup/main.yml
+  when: adots_backup_dotfiles
+
+- name: "{{ ansible_role_name }}: {{ ansible_parent_role_names }}: Including adots deploy tasks"
+  ansible.builtin.include_tasks:
+    file: __adots/deploy/main.yml
+  when: adots_deploy_dotfiles

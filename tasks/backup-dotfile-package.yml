@@ -1,0 +1,19 @@
+---
+# Backup Dotfile Package
+
+- name: "Backup [{{ dot_package.name }}] - [{{ ansible_user }}] Dotfiles from target machine"
+  ansible.posix.synchronize:
+    src: "{{ item }}"
+    dest: "files/backup/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
+    archive: yes
+    delete: no
+    mode: pull
+    recursive: yes
+    owner: no
+    group: no
+    perms: no
+    rsync_opts:
+      - "--mkpath"
+  ignore_errors: yes
+  loop: "{{ dot_package.backup_paths }}"
+  when: dot_package.backup_paths is defined

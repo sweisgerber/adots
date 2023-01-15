@@ -1,0 +1,16 @@
+---
+# tasks file for adots
+
+- name: "Install adots dependencies"
+  package:
+    name: "{{ adots_packages }}"
+    state: latest
+  become: true
+
+
+- name: "Install adots custom dependencies"
+  package:
+    name: "{{ adots_custom_dependencies }}"
+    state: latest
+  become: true
+  when: (adots_custom_dependencies is defined) and (adots_custom_dependencies | length > 0)
