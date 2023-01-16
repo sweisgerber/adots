@@ -1,6 +1,8 @@
 ---
 # defaults file for adots
 
+adots_log_verbose: false
+
 adots_install_own_dependencies: false
 
 adots_install_os_packages: true

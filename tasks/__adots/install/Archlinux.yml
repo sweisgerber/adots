@@ -8,7 +8,6 @@
   become: true
   when: (adots.packages[ansible_os_family|lower] is defined) and (adots.packages[ansible_os_family | lower] | length == 0)
 
-
 - name: "Install {{ adots_current_package }} packages AUR"
   ansible.builtin.debug:
     msg: "Not implemented yet {{ adots.packages.aur }}"

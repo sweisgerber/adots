@@ -6,6 +6,7 @@
     path: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item | dirname }}"
     state: directory
   loop: "{{ adots_found_backup_paths }}"
+  when: adots.backup_dedicated_only is not defined or adots.backup_dedicated_only == false
 
 - name: "{{ adots_current_package }} : Fetch Backup dotfiles "
   ansible.builtin.fetch:
@@ -13,6 +14,7 @@
     dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
     fail_on_missing: false
   loop: "{{ adots_found_backup_paths }}"
+  when: adots.backup_dedicated_only is not defined or adots.backup_dedicated_only == false
 
 - name: "{{ adots_current_package }} : Fetch Make sure destination dir exists Extra Backup"
   file:

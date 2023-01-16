@@ -1,10 +1,10 @@
 ---
 # tasks file for adots
 
-- name: "{{ adots_current_package }} : Rsync Backup dotfiles"
+- name: "{{ adots_current_package }} : Rsync Backup dotfiles (Probed paths)"
   ansible.posix.synchronize:
-    src: "{{ item }}"
-    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
+    src: "{{ item | quote  }}"
+    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item | dirname }}/"
     archive: true
     checksum: true
     compress: true
@@ -16,13 +16,31 @@
     perms: false
     rsync_opts:
       - "--mkpath"
-  ignore_errors: yes
+#  ignore_errors: yes
   loop: "{{ adots_found_backup_paths }}"
+  register: rsync_status
+  failed_when: rsync_status.rc not in [ 0, 23 ]
+  when: adots.backup_dedicated_only is not defined or adots.backup_dedicated_only == false
 
-- name: "{{ adots_current_package }} : Rsync Backup dotfiles"
+- name: "{{ adots_current_package }} : Checking if backups were created (Probed paths)"
+  ansible.builtin.debug:
+    msg: "  ->  {{ adots_current_package }} : No backups were created for package (rsync status: {{ rsync_status.rc | default('None') }}"
+  when:
+    - adots_log_verbose
+    - rsync_status.skipped is not defined or rsync_status.skipped == false
+    - rsync_status.rc is defined and rsync_status.rc != 0
+
+- name: "{{ adots_current_package }} : Checking if backups were created (Probed paths)"
+  ansible.builtin.debug:
+    msg: "  ->  {{ adots_current_package }} : Skipped Backups (adots.backup_dedicated_only: {{ adots | default('None') }})"
+  when:
+    - adots_log_verbose
+    - rsync_status.skipped is defined and rsync_status.skipped == true
+
+- name: "{{ adots_current_package }} : Rsync Backup dotfiles (Defined paths)"
   ansible.posix.synchronize:
-    src: "{{ item }}"
-    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item }}"
+    src: "{{ item | quote }}"
+    dest: "{{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}/{{ item | dirname }}/"
     archive: true
     checksum: true
     compress: true
@@ -34,6 +52,23 @@
     perms: false
     rsync_opts:
       - "--mkpath"
-  ignore_errors: yes
+#  ignore_errors: yes
   loop: "{{ adots.backup_paths }}"
-  when: adots.backup_paths is defined and backup_paths | length > 0
+  register: rsync_status
+  failed_when: rsync_status.rc not in [ 0, 23 ]
+  when: adots.backup_paths is defined and adots.backup_paths | length > 0
+
+- name: "{{ adots_current_package }} : Checking if backups were created (Defined paths)"
+  ansible.builtin.debug:
+    msg: "  ->  {{ adots_current_package }} : No backups were created for package (rsync status: {{ rsync_status.rc | default('None')}} "
+  when:
+    - adots_log_verbose
+    - rsync_status.skipped is not defined or rsync_status.skipped == false
+    - rsync_status.rc is defined and rsync_status.rc != 0
+
+- name: "{{ adots_current_package }} : Checking if backups were created (Defined paths)"
+  ansible.builtin.debug:
+    msg: "  ->  {{ adots_current_package }} : Skipped Backups (adots.backup_dedicated_only: {{ adots  | default('None') }})"
+  when:
+    - adots_log_verbose
+    - rsync_status.skipped is defined and rsync_status.skipped == true

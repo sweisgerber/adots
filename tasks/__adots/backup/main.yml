@@ -4,6 +4,7 @@
 - name: "{{ adots_current_package }} : Collecting backups paths"
   local_action:  "ansible.builtin.command find {{ adots_role_root_folder }}/files/ -type f -printf '%P\n'"
   register: _adots_local_found_backup_paths
+  changed_when: false
 
 - name: "{{ adots_current_package }} : Cleaning backups paths"
   ansible.builtin.set_fact:
@@ -13,6 +14,7 @@
 - name: "{{ adots_current_package }} : Backup dotfiles to target: {{ adots_backup_path }}/{{ inventory_hostname }}/{{ ansible_user }}"
   ansible.builtin.debug:
     msg: "{{ adots_found_backup_paths }}"
+  when: adots_log_verbose
 
 - name: "{{ adots_current_package }} : Fetching Dotfile Backups"
   ansible.builtin.include_tasks: __adots/backup/fetch.yml
