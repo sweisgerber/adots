@@ -27,6 +27,9 @@ adots_backup_method: synchronize # one can also `fetch`
 # Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
 adots_deploy_copy_links: true
 
+#adots_deploy_folder: "~/"
+adots_deploy_folder: "~/.adots/"
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 dotfile_tags:
