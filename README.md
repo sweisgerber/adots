@@ -44,6 +44,7 @@ adots:
     archlinux:
       - <PACKAGE_NAME_ARCH>
     aur: [] # <PACKAGE_NAME_AUR>
+    pip: []
   backup_dedicated_only: false
   backup_paths:
     - <PATH/ON/TARGET/HOST>

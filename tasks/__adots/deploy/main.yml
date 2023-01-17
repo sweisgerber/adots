@@ -6,7 +6,7 @@
     #
     src: "{{ adots_role_root_folder }}/files/"
     # structure in src folder should be the desired structure on the dest
-    dest: "{{ adots_deploy_folder | quote }}"
+    dest: "{{ adots_deploy_folder }}"
     #
     archive: false
     checksum: true
