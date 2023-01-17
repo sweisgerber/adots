@@ -3,12 +3,12 @@
 
 - name: "Install {{ adots_current_package }} packages (generic)"
   ansible.builtin.package:
-    name: "{{ adots.packages[ansible_os_family|lower] }}"
+    name: "{{ adots.packages.generic }}"
     state: latest
   become: true
   when:
     - adots.packages.generic is defined and adots.packages.generic | length > 0
-    - adots.packages[ansible_os_family | lower] | length == 0
+    - adots.packages[ansible_os_family | lower] is not defined or adots.packages[ansible_os_family | lower] | length == 0
 
 - name: "Install {{ adots_current_package }} packages for {{ ansible_os_family }}"
   ansible.builtin.include_tasks: __adots/install/{{ ansible_os_family }}.yml
