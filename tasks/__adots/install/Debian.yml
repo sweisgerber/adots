@@ -6,4 +6,6 @@
     name: "{{ adots.packages[ansible_os_family | lower] }}"
     state: latest
   become: true
-  when: (adots.packages[ansible_os_family|lower] is defined) and (adots.packages[ansible_os_family | lower] | length == 0)
+  when:
+    - adots.packages[ansible_os_family|lower] is defined
+    - adots.packages[ansible_os_family | lower] | length > 0
