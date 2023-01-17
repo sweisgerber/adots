@@ -38,7 +38,7 @@ adots:
   name: <NAME> # rolename usually
   type: default
   packages:
-    general: []
+    generic: []
     debian:
       - <PACKAGE_NAME_DEBIAN>
     archlinux:

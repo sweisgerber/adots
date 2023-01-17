@@ -1,7 +1,7 @@
 ---
 # tasks file for adots
 
-- name: "Install {{ adots_current_package }} packages"
+- name: "Install {{ adots_current_package }} packages (generic)"
   ansible.builtin.package:
     name: "{{ adots.packages[ansible_os_family|lower] }}"
     state: latest
