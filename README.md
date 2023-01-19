@@ -1,7 +1,12 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+
+
+roles/NAME/files_os_family/{{ansible_os_family}}/
+roles/NAME/files_hosts/{{ inventory_hostname }}/
+
+
 
 Requirements
 ------------

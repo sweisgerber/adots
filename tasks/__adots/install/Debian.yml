@@ -7,5 +7,5 @@
     state: latest
   become: true
   when:
-    - adots.packages[ansible_os_family|lower] is defined
+    - adots.packages[ansible_os_family | lower] is defined
     - adots.packages[ansible_os_family | lower] | length > 0
