@@ -27,37 +27,6 @@
       - "--mkpath"
       - "--exclude 'README.md'"
 
-- name: "Check if path 'files_hosts/{{ inventory_hostname }}/' exists"
-  local_action: stat path="{{ adots_role_root_folder }}/files_hosts/{{ inventory_hostname }}/"
-  register: files_host
-
-- name: "Deploy {{ adots_current_package }} dotfiles: 'files_hosts/{{ inventory_hostname }}/'"
-  ansible.posix.synchronize:
-    #
-    src: "{{ adots_role_root_folder }}/files_hosts/{{ inventory_hostname }}/"
-    # structure in src folder should be the desired structure on the dest
-    dest: "{{ adots_deploy_folder }}"
-    #
-    archive: false
-    checksum: true
-    compress: true
-    # Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
-    copy_links: "{{ adots_deploy_copy_links | bool  }}"
-    # Copy symlinks as symlinks.
-    # links: false
-    delete: false
-    mode: push
-    # this sets owner:group to the copying user
-    owner: false
-    group: false
-    perms: "{{ adots_deploy_keep_permissions | bool }}"
-    recursive: true
-    ssh_connection_multiplexing: true
-    rsync_opts:
-      - "--mkpath"
-      - "--exclude 'README.md'"
-  when: files_host.stat.exists
-
 - name: "Check if path 'files_os_family/{{ ansible_os_family }}/' exists"
   local_action: stat path="{{ adots_role_root_folder }}/files_os_family/{{ ansible_os_family }}/"
   register: files_os_family
@@ -88,3 +57,34 @@
       - "--mkpath"
       - "--exclude 'README.md'"
   when: files_os_family.stat.exists
+
+- name: "Check if path 'files_hosts/{{ inventory_hostname }}/' exists"
+  local_action: stat path="{{ adots_role_root_folder }}/files_hosts/{{ inventory_hostname }}/"
+  register: files_host
+
+- name: "Deploy {{ adots_current_package }} dotfiles: 'files_hosts/{{ inventory_hostname }}/'"
+  ansible.posix.synchronize:
+    #
+    src: "{{ adots_role_root_folder }}/files_hosts/{{ inventory_hostname }}/"
+    # structure in src folder should be the desired structure on the dest
+    dest: "{{ adots_deploy_folder }}"
+    #
+    archive: false
+    checksum: true
+    compress: true
+    # Copy symlinks as the item that they point to (the referent) is copied, rather than the symlink.
+    copy_links: "{{ adots_deploy_copy_links | bool  }}"
+    # Copy symlinks as symlinks.
+    # links: false
+    delete: false
+    mode: push
+    # this sets owner:group to the copying user
+    owner: false
+    group: false
+    perms: "{{ adots_deploy_keep_permissions | bool }}"
+    recursive: true
+    ssh_connection_multiplexing: true
+    rsync_opts:
+      - "--mkpath"
+      - "--exclude 'README.md'"
+  when: files_host.stat.exists

@@ -1,11 +1,28 @@
 Role Name
 =========
 
+# Config files
 
+Place config files in one of those folders. They get applied and potentially overwritten in that order,
+which allows flexibility and sane defaults
 
-roles/NAME/files_os_family/{{ansible_os_family}}/
-roles/NAME/files_hosts/{{ inventory_hostname }}/
+## Universal Config files
 
+Place them in:
+
+- `roles/NAME/files/`
+
+## Distribution specific files
+
+Place them in:
+
+- `roles/NAME/files_os_family/{{ansible_os_family}}/`
+
+## Host specific files
+
+Place them in:
+
+- `roles/NAME/files_hosts/{{ inventory_hostname }}/`
 
 
 Requirements
