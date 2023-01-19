@@ -25,6 +25,7 @@
     ssh_connection_multiplexing: true
     rsync_opts:
       - "--mkpath"
+      - "--exclude 'README.md'"
 
 - name: "Check if path 'files_hosts/{{ inventory_hostname }}/' exists"
   local_action: stat path="{{ adots_role_root_folder }}/files_hosts/{{ inventory_hostname }}/"
@@ -54,6 +55,7 @@
     ssh_connection_multiplexing: true
     rsync_opts:
       - "--mkpath"
+      - "--exclude 'README.md'"
   when: files_host.stat.exists
 
 - name: "Check if path 'files_os_family/{{ ansible_os_family }}/' exists"
@@ -84,4 +86,5 @@
     ssh_connection_multiplexing: true
     rsync_opts:
       - "--mkpath"
+      - "--exclude 'README.md'"
   when: files_os_family.stat.exists
