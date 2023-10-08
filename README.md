@@ -1,59 +1,74 @@
 Role Name
 =========
 
-# Config files
-
-Place config files in one of those folders. They get applied and potentially overwritten in that order,
-which allows flexibility and sane defaults
-
-## Universal Config files
-
-Place them in:
-
-- `roles/NAME/files/`
-
-## Distribution specific files
-
-Place them in:
-
-- `roles/NAME/files_os_family/{{ansible_os_family}}/`
-
-## Host specific files
-
-Place them in:
-
-- `roles/NAME/files_hosts/{{ inventory_hostname }}/`
-
+ADOTS
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Setup a dynamic role task file in `<PLAYBOOKDIR>/tasks/__dynamic_role_name.yml` with the content:
+
+```yaml
+---
+#
+- name: "Check for package filter"
+  ansible.builtin.set_fact:
+    __roles_to_apply: "{{ packages.split(',') | list }}"
+  when: packages is defined and packages | length > 0
+
+- name: "{{ ansible_role_name }}: Including adots role "
+  ansible.builtin.include_role:
+    name: "{{ dotfiles_ng_package | trim }}"
+  loop: "{{ __roles_to_apply }}"
+  loop_control:
+    loop_var: dotfiles_ng_package
+```
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+%
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+%
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+#
+# Usually one entry per 1-X hosts & user.
+# - If a host has 5 users that should get setup via this playbook, this should result in 5 entries. 
+# - If 5 hosts have one user that should get setup via this playbook, this should result in 1 entry.
+#
+# -> This makes per user / host entries much simpler and the default paradigm
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+# user root
+- hosts:
+    - server
+    - server2
+  tasks:
+    - name: "Adots : {{ remote_user  }} : include backup tasks"
+      # This is the task that can call roles based on the host_vars definition
+      ansible.builtin.include_tasks:
+        file: tasks/__dynamic_role_name.yml
+  vars_files:
+    - vars/main.yml
+  vars:
+    # specify user
+    ansible_user: root
+    #
+    # Specify the list of roles (adots-packages) to apply as a list in a variable.
+    # Usually one would do that in `host_vars/server.yml`
+    # 
+    __roles_to_apply: "{{ dotfiles_ng_host_packages }}"
+```
 
+# Example adots dotfile package definition
 
-Example adots dotfile package definition
-----------------------------------------
-
-Place the package definition in the roles `defaults/main.yml` file.
+Place the package definition in the roles `defaults/main.yml` file, e.g. `<playbook-dir>/roles/vim/defaults/main.yml`.
 
 ```yaml
 adots:
@@ -73,6 +88,21 @@ adots:
     - <ANOTHER/PATH/ON/TARGET/HOST>
 ```
 
+# Example vim tasks
+
+File: `<PLAYBOOK-DIR>/roles/vim/tasks/main.yml`
+
+```yaml
+---
+# tasks file for vim
+
+- name: "{{ ansible_role_name }}: Including adots role "
+  ansible.builtin.include_role:
+    name: adots
+    tasks_from: adots.yml
+    public: false
+```
+
 License
 -------
 
@@ -81,4 +111,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+<sebastian@dystopianfuture.de>
